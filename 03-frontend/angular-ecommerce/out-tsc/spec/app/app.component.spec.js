@@ -1,0 +1,29 @@
+import { __awaiter } from "tslib";
+import { TestBed } from '@angular/core/testing';
+import { AppComponent } from './app.component';
+describe('AppComponent', () => {
+    beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
+        yield TestBed.configureTestingModule({
+            declarations: [
+                AppComponent
+            ],
+        }).compileComponents();
+    }));
+    it('should create the app', () => {
+        const fixture = TestBed.createComponent(AppComponent);
+        const app = fixture.componentInstance;
+        expect(app).toBeTruthy();
+    });
+    it(`should have as title 'angular-ecommerce'`, () => {
+        const fixture = TestBed.createComponent(AppComponent);
+        const app = fixture.componentInstance;
+        expect(app.title).toEqual('angular-ecommerce');
+    });
+    it('should render title', () => {
+        const fixture = TestBed.createComponent(AppComponent);
+        fixture.detectChanges();
+        const compiled = fixture.nativeElement;
+        expect(compiled.querySelector('.content span').textContent).toContain('angular-ecommerce app is running!');
+    });
+});
+//# sourceMappingURL=app.component.spec.js.map

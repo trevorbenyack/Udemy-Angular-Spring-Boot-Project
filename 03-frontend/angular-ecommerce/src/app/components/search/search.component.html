@@ -1,0 +1,17 @@
+<div class="form-header">
+
+  <!--#myInput is a template variable -->
+  <!-- ( ... ) is an event listener. So (keyup.enter) listens for
+          the enter key to be pressed and released. Once it's released (up)
+          the doSearch() method is called and the value in the input field
+          is passed to it (myInput.value) -->
+  <input #myInput type="text"
+         placeholder="Search for products..."
+         class="au-input au-input-xl"
+         (keyup.enter)="doSearch(myInput.value)"/>
+
+  <button (click)="doSearch(myInput.value)" class="au-btn-submit">
+    Search
+  </button>
+
+</div>

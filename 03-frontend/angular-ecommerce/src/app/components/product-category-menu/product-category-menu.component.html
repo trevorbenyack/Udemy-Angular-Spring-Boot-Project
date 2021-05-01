@@ -1,0 +1,15 @@
+<div class="menu-sidebar-content js-scrollbar1">
+  <nav class="navbar-sidebar">
+    <ul class="list-unstyled navbar-list">
+      <!--The param name is id and we pass the value of tempProductCategory.id for this parameter-->
+      <!-- routerLink looks for a matching route in app.module.ts and then serves the corresponding
+      component. In this case, that is ProductListComponent -->
+      <!--routerLinkActive refers to the css style applied to the link when it is clicked
+      In this case, that css style is .active-link{}-->
+      <li *ngFor="let tempProductCategory of productCategories">
+        <a routerLink="/category/{{ tempProductCategory.id }}" routerLinkActive="active-link"></a>
+        {{ tempProductCategory.categoryName }}
+      </li>
+    </ul>
+  </nav>
+</div>

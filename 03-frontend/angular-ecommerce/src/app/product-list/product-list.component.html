@@ -1,0 +1,5 @@
+
+<!-- This is a foreach loop e.g. for(Product tempProduct : products(e.g. Product[]))"-->
+<p *ngFor="let tempProduct of products">
+  {{ tempProduct.name}}: {{ tempProduct.unitPrice | currency:'USD'}}
+</p>
