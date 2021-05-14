@@ -1,7 +1,9 @@
 package com.luv2code.ecommerce.config;
 
+import com.luv2code.ecommerce.entity.Country;
 import com.luv2code.ecommerce.entity.Product;
 import com.luv2code.ecommerce.entity.ProductCategory;
+import com.luv2code.ecommerce.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -26,8 +28,6 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         entityManager = em;
     }
 
-
-
     // apparently this is deprecated, so if not changed by end of project, will need to look
     // for how to use updated version.
     // Since we are overriding this method, we use the same signature (and therefore the same
@@ -38,23 +38,15 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
         // This section is to configure which HTTP request types will be allowed
         // These are the HTTP methods that we want to restrict at the beginning
+        // this is passed into the disableHttpMethods() method we created below
         HttpMethod[] theUnsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
 
+        // We created this method ourselves in order to....
         // disable HTTP methods for Product: Put, Post, Delete
-        config.getExposureConfiguration()// registers filter customizing the HTTP methods; by default is registered globally
-                .forDomainType(Product.class) // specifies which Domains to apply the filter too
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions)) // registers the filter for item resources
-                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))); // registers the filter for collection resources
-        // an item resource is one thing... in this case, one Product (e.g. /products/{product_id})
-        // a collection resource is multiple things... in this case, several Products (e.g. /products)
-        // So this protects against put/post/delete for a single Product or several Products
-
-        // See notes above for explanation
-        // disable HTTP methods for ProductCategory: Put, Post, Delete
-        config.getExposureConfiguration()
-                .forDomainType(ProductCategory.class)
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
-                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions)));
+        disableHttpMethods(Product.class, config, theUnsupportedActions);
+        disableHttpMethods(ProductCategory.class, config, theUnsupportedActions);
+        disableHttpMethods(Country.class, config, theUnsupportedActions);
+        disableHttpMethods(State.class, config, theUnsupportedActions);
 
         // This section is to expose the product_category id in the JSON response
         // call an internal helper method
@@ -62,11 +54,19 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
     } // end configureRepositoryRestConfiguration()
 
+    private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
+        config.getExposureConfiguration()// registers filter customizing the HTTP methods; by default is registered globally
+                .forDomainType(theClass) // specifies which Domains to apply the filter too
+                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions)) // registers the filter for item resources
+                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))); // registers the filter for collection resources
+        // an item resource is one thing... in this case, one Product (e.g. /products/{product_id})
+        // a collection resource is multiple things... in this case, several Products (e.g. /products)
+        // So this protects against put/post/delete for a single Product or several Products
+    }
+
     // This is needed because Spring Data REST api does not expose the primary key in the returned JSON body
     // more info: http://tommyziegler.com/how-to-expose-the-resourceid-with-spring-data-rest/
     private void exposeIds(RepositoryRestConfiguration config) {
-
-
 
         // Overall strategy:
         // Get the entities,

@@ -5,23 +5,63 @@
         <!-- loop over the collection of products -->
         <div *ngFor="let tempProduct of products" class="col-md-3">
           <div class="product-box">
-            <img src="{{ tempProduct.imageUrl }}" class="img-responsive">
-            <h1>{{ tempProduct.name }}</h1>
+            <a routerLink="/products/{{ tempProduct.id }}">
+              <img src="{{ tempProduct.imageUrl }}" class="img-responsive">
+            </a>
+            <a routerLink="/products/{{ tempProduct.id }}">
+              <h1>{{ tempProduct.name }}</h1>
+            </a>
             <div class="price">{{ tempProduct.unitPrice | currency:'USD' }}</div>
-            <a href="#" class="primary-btn">Add to cart</a>
+            <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</button>
           </div>
         </div>
 
         <!-- if products empty then display a message -->
-<!--    The '?' in "products?.length" is known as a safe navigation operator
-        It guards against null and undefined values in property paths
-        It's a shortcut to avoiding null pointer or undefined exception issues
-        effective it's doing if(products == null || products == undefined || products.length == 0)-->
+        <!--    The '?' in "products?.length" is known as a safe navigation operator
+                It guards against null and undefined values in property paths
+                It's a shortcut to avoiding null pointer or undefined exception issues
+                effective it's doing if(products == null || products == undefined || products.length == 0)-->
         <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">
           No products found
         </div>
 
       </div>
+
+      <!-- My footer -->
+      <div class="footer-pagination">
+        <div class="row">
+          <div class="col-md-6">
+            <!--
+                [(page)] is two-way data binding, called "banana in a box"
+                () is event binding
+                [] is property binding
+                ngb-pagination uses custom @Input/@Ouput decorators to change
+                property values in its code
+                When a page is clicked ((pageChange) event), it calls our listProducts() method
+                -->
+            <ngb-pagination
+              [(page)]="thePageNumber"
+              [pageSize]="thePageSize"
+              [collectionSize]="theTotalElements"
+              [maxSize]="5"
+              [boundaryLinks]="true"
+              (pageChange)="listProducts()">
+            </ngb-pagination>
+          </div>
+          <div class="col-md-6 mt-2" style="text-align: left;">
+            <span class="mr-2">Page Size</span>
+            <select (change)="updatePageSize($event.target)">
+              <option>2</option>
+              <option selected="true">5</option>
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- end footer -->
     </div>
   </div>
 </div>
+

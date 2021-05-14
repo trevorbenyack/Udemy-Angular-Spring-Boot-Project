@@ -9,6 +9,20 @@ let ProductService = class ProductService {
         this.baseUrl = 'http://localhost:8080/api/products';
         this.categoryUrl = 'http://localhost:8080/api/product-categories';
     }
+    getProduct(theProductId) {
+        // need to build URL based on product id
+        const productUrl = `${this.baseUrl}/${theProductId}`;
+        // no need to "unwrap" this, b/c it's not embedded within an outer object
+        return this.httpClient.get(productUrl);
+    }
+    // Spring Data REST supports pagination out of the box...
+    // just send the parameters for page and size
+    getProductListPaginate(thePage, thePageSize, theCategoryId) {
+        // need to build URL based on category id, page, and size
+        const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`
+            + `&page=${thePage}&size=${thePageSize}`;
+        return this.httpClient.get(searchUrl);
+    }
     // It's best practice to create a scalable solution by definiing re-usable injectable
     // services to perform data-handling functionality, which is what we're doing with
     // the getProductList() and getProductCategories() methods.
@@ -24,6 +38,12 @@ let ProductService = class ProductService {
         // need to build URL based on keyword
         const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`;
         return this.getProducts(searchUrl);
+    }
+    searchProductsPaginate(thePage, thePageSize, theKeyword) {
+        // need to build URL based on category keyword, page, and size
+        const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`
+            + `&page=${thePage}&size=${thePageSize}`;
+        return this.httpClient.get(searchUrl);
     }
     getProducts(searchUrl) {
         // The end product being returned is an observable Product[]

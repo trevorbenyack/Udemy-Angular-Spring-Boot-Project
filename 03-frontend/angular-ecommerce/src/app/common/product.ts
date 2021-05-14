@@ -1,6 +1,7 @@
 export class Product {
 
   // These names match with the actual JSON data coming back from the spring data REST API
+  id: string;
   sku: string;
   name: string;
   description: string;
