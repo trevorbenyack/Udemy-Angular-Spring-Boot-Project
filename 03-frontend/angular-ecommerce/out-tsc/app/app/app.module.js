@@ -14,7 +14,7 @@ import { CartStatusComponent } from './components/cart-status/cart-status.compon
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
-// this is an array of rout items
+// this is an array of route items
 const routes = [
     // path: 'myPath' is the path to match for the corresponding component
     // ProductListService is the instance of the component that's created when the path is matched
