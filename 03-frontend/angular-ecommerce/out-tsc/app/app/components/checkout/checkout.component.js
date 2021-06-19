@@ -27,36 +27,22 @@ let CheckoutComponent = class CheckoutComponent {
                 firstName: new FormControl('', [Validators.required,
                     Validators.minLength(2),
                     Luv2ShopValidators.notOnlyWhitespace]),
-                lastName: new FormControl('', [Validators.required,
-                    Validators.minLength(2),
-                    Luv2ShopValidators.notOnlyWhitespace]),
+                lastName: new FormControl('', [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
                 email: new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
             }),
             shippingAddress: this.formBuilder.group({
-                street: new FormControl('', [Validators.required,
-                    Validators.minLength(2),
-                    Luv2ShopValidators.notOnlyWhitespace]),
-                city: new FormControl('', [Validators.required,
-                    Validators.minLength(2),
-                    Luv2ShopValidators.notOnlyWhitespace]),
+                street: new FormControl('', [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
+                city: new FormControl('', [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
                 state: new FormControl('', [Validators.required]),
                 country: new FormControl('', [Validators.required]),
-                zipCode: new FormControl('', [Validators.required,
-                    Validators.minLength(2),
-                    Luv2ShopValidators.notOnlyWhitespace])
+                zipCode: new FormControl('', [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace])
             }),
             billingAddress: this.formBuilder.group({
-                street: new FormControl('', [Validators.required,
-                    Validators.minLength(2),
-                    Luv2ShopValidators.notOnlyWhitespace]),
-                city: new FormControl('', [Validators.required,
-                    Validators.minLength(2),
-                    Luv2ShopValidators.notOnlyWhitespace]),
+                street: new FormControl('', [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
+                city: new FormControl('', [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
                 state: new FormControl('', [Validators.required]),
                 country: new FormControl('', [Validators.required]),
-                zipCode: new FormControl('', [Validators.required,
-                    Validators.minLength(2),
-                    Luv2ShopValidators.notOnlyWhitespace])
+                zipCode: new FormControl('', [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace])
             }),
             creditCard: this.formBuilder.group({
                 cardType: new FormControl('', [Validators.required]),
@@ -85,7 +71,7 @@ let CheckoutComponent = class CheckoutComponent {
             this.countries = data;
         });
     } // end ngOnInit()
-    // These are typescript get methods. They use a special syntax:
+    // These are typescript getter methods for form fields. They use a special syntax:
     // get myVariable() { return this.myVariableName; }
     // The method name doesn't particularly matter, but when accessing the variable
     // in the template, the name used in the template must match the method name.

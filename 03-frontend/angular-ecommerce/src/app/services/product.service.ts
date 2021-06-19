@@ -38,7 +38,7 @@ export class ProductService {
 
   }
 
-  // It's best practice to create a scalable solution by definiing re-usable injectable
+  // It's best practice to create a scalable solution by defining re-usable injectable
   // services to perform data-handling functionality, which is what we're doing with
   // the getProductList() and getProductCategories() methods.
 
@@ -79,12 +79,12 @@ export class ProductService {
       .get<ResponseProducts>(searchUrl)
       // pipe can be used to sequentially combine multiple functions into a single function.
       // Pipe is taking the observable and passing it to each function (just map in this case)
-      // map is then pulling out the products array and returning it.
+      // map then returns all the elements and also adds Products[] for direct access.
       // i.e. this last part is "unwrapping" the products array from the _embedded wrapper.
       .pipe(map(response => response._embedded.products));
   }
 
-  // This unwraps the JSON from the Spring Data REST response
+  // map(...) unwraps the JSON from the Spring Data REST response so that it can be accessed directly
   // see above getProductList() comments for explanation
   getProductCategories(): Observable<ProductCategory[]> {
     return this.httpClient.get<ResponseProductCategories>(this.categoryUrl).pipe(
