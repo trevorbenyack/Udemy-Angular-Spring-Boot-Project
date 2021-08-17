@@ -18,6 +18,19 @@ let CartService = class CartService {
         // we only need the very last event in our case here)
         this.totalPrice = new BehaviorSubject(0);
         this.totalQuantity = new BehaviorSubject(0);
+        // using sessionStorage:
+        // sessionStorage is a reference to the web browser's session storage
+        // storage: Storage = sessionStorage;
+        // using localStorage:
+        // with localStorage data is persisted and survives browser restarts
+        this.storage = localStorage;
+        // read data from storage
+        let data = JSON.parse(this.storage.getItem('cartItems'));
+        if (data != null) {
+            this.cartItems = data;
+            // compute totals based on the data that is read from storage
+            this.computeCartTotals();
+        }
     }
     addToCart(theCartItem) {
         // check if we already have the item in our cart
@@ -55,8 +68,13 @@ let CartService = class CartService {
             this.totalQuantity.next(totalQuantityValue);
             // log cart data just for debugging purposes
             this.logCartData(totalPriceValue, totalQuantityValue);
+            // persist cart data
+            this.persistCartItems();
         }
     } // end computeCartTotals()
+    persistCartItems() {
+        this.storage.setItem('cartItems', JSON.stringify(this.cartItems));
+    }
     logCartData(totalPriceValue, totalQuantityValue) {
         for (let tempCartItem of this.cartItems) {
             const subTotalPrice = tempCartItem.quantity * tempCartItem.unitPrice;
