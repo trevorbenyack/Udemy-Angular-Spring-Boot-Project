@@ -4,6 +4,7 @@ let LoginStatusComponent = class LoginStatusComponent {
     constructor(oktaAuthService) {
         this.oktaAuthService = oktaAuthService;
         this.isAuthenticated = false;
+        this.storage = sessionStorage;
     }
     ngOnInit() {
         // Subscribe to authentication state changes
@@ -19,6 +20,10 @@ let LoginStatusComponent = class LoginStatusComponent {
             // user full name is exposed as a property name
             this.oktaAuthService.getUser().then((res) => {
                 this.userFullName = res.name;
+                // retrieve the user's email from authentication response;
+                const theEmail = res.email;
+                // now store the email in browser storage
+                this.storage.setItem('userEmail', JSON.stringify(theEmail));
             });
         }
     }
