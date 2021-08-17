@@ -46,7 +46,12 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         // This section is to configure which HTTP request types will be allowed
         // These are the HTTP methods that we want to restrict at the beginning
         // this is passed into the disableHttpMethods() method we created below
-        HttpMethod[] theUnsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
+        HttpMethod[] theUnsupportedActions = {
+                HttpMethod.PUT,
+                HttpMethod.POST,
+                HttpMethod.DELETE,
+                HttpMethod.PATCH
+        };
 
         // We created this method ourselves in order to....
         // disable HTTP methods for Product: Put, Post, Delete

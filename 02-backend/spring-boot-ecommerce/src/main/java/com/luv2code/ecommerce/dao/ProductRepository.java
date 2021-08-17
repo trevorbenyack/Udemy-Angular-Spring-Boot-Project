@@ -4,6 +4,7 @@ import com.luv2code.ecommerce.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 // Now configured in MyDataRestConfig
 //@CrossOrigin("http://localhost:4200") // This is the server that our angular application is running on
 // JpaRepository<MyEntityType, MyIdType>
+@RepositoryRestResource
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // this is query method because it starts with "findBy"
