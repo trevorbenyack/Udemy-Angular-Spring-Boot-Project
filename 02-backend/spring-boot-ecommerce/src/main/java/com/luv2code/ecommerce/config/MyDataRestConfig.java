@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+// @RestController configuration is separate from Spring Data Rest configuration!!!
+
 // for additional information baeldung.com/spring-data-rest-customize-http-endpoints
 @Configuration // Lets spring know this is a configuration file
 // RepositoryRestConfigurer is a component to configure and customize the setup of Spring Data REST
