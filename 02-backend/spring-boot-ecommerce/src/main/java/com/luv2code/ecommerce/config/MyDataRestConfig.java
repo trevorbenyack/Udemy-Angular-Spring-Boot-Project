@@ -5,10 +5,12 @@ import com.luv2code.ecommerce.entity.Product;
 import com.luv2code.ecommerce.entity.ProductCategory;
 import com.luv2code.ecommerce.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.EntityType;
@@ -23,8 +25,11 @@ import java.util.Set;
 // RepositoryRestConfigurer is a component to configure and customize the setup of Spring Data REST
 public class MyDataRestConfig implements RepositoryRestConfigurer {
 
-    // this handles the auto-wiring of our JPA entity mananger
-    private EntityManager entityManager;
+    @Value("${allowed.origins}")
+    private String[] theAllowedOrigins;
+
+    // this handles the auto-wiring of our JPA entity manager
+    private final EntityManager entityManager;
     @Autowired
     public MyDataRestConfig(EntityManager em) {
         entityManager = em;
@@ -35,8 +40,8 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
     // Since we are overriding this method, we use the same signature (and therefore the same
     // RepositoryRestConfiguration parameter type (That's where the config comes in).
     @Override
-    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        RepositoryRestConfigurer.super.configureRepositoryRestConfiguration(config);
+    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry corsRegistry) {
+        RepositoryRestConfigurer.super.configureRepositoryRestConfiguration(config, corsRegistry);
 
         // This section is to configure which HTTP request types will be allowed
         // These are the HTTP methods that we want to restrict at the beginning
@@ -54,9 +59,12 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         // call an internal helper method
         exposeIds(config);
 
+        // configure cors mapping
+        corsRegistry.addMapping(config.getBasePath() + "/**").allowedOrigins(theAllowedOrigins);
+
     } // end configureRepositoryRestConfiguration()
 
-    private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
+    private void disableHttpMethods(Class<?> theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
         config.getExposureConfiguration()// registers filter customizing the HTTP methods; by default is registered globally
                 .forDomainType(theClass) // specifies which Domains to apply the filter too
                 .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions)) // registers the filter for item resources
@@ -90,11 +98,11 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
 
         // create an array of the entity types
-        List<Class> entityClasses = new ArrayList<>();
+        List<Class<?>> entityClasses = new ArrayList<>();
 
         // get the entity types for the entities
         // Converts the entity type to a java class type
-        for(EntityType tempEntityType : entities) {
+        for(EntityType<?> tempEntityType : entities) {
             entityClasses.add(tempEntityType.getJavaType());
         }
 
@@ -103,7 +111,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         // expose the entity ids for the array of entity/domain types
         // passing in (new Class[0]) ensures that it will be an array of Class types
         // also, the runtime will create a new array with the correct size
-        Class[] domainTypes = entityClasses.toArray(new Class[0]);
+        Class<?>[] domainTypes = entityClasses.toArray(new Class[0]);
 
         // 'domain type' refers to the class type itself (vs entity type which is the object
         // used to map the domain type to a persistent store object (e.g. database table)

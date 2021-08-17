@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 // Origin is protocal + hostname + port
 // All three have to match the calling app!
-@CrossOrigin("http://localhost:4200") // This is the server that our angular application is running on
+// Now configured in MyDataRestConfig
+//@CrossOrigin("http://localhost:4200") // This is the server that our angular application is running on
 // JpaRepository<MyEntityType, MyIdType>
 public interface ProductRepository extends JpaRepository<Product, Long> {
 

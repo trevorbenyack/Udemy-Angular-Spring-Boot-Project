@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 // Origin is protocal + hostname + port
 // All three have to match the calling app!
-@CrossOrigin("http://localhost:4200") // This is the server that our angular application is running on
+// now configured in MyDataRestConfig
+// @CrossOrigin("http://localhost:4200") // This is the server that our angular application is running on
 
 // @RepositoryRestResource is not required for a repository to be exported.
 // It is used only to change the export details, such as using /people
