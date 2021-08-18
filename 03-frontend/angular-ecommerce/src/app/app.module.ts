@@ -28,6 +28,7 @@ import {
 import myAppConfig from './config/my-app-config';
 import {ProductService} from './services/product.service';
 import { MembersPageComponent } from './components/members-page/members-page.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
 // this is an Angular InjectionToken used to configure the OktaAuthService
 const oktaConfig = Object.assign({
@@ -78,7 +79,8 @@ const routes: Routes = [
     CheckoutComponent,
     LoginComponent,
     LoginStatusComponent,
-    MembersPageComponent
+    MembersPageComponent,
+    OrderHistoryComponent
   ],
   imports: [
     RouterModule.forRoot(routes), // (routes) is the route array defined above

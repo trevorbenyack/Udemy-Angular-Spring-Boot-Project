@@ -20,6 +20,7 @@ import { OKTA_CONFIG, OktaAuthGuard, OktaAuthModule, OktaCallbackComponent } fro
 import myAppConfig from './config/my-app-config';
 import { ProductService } from './services/product.service';
 import { MembersPageComponent } from './components/members-page/members-page.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 // this is an Angular InjectionToken used to configure the OktaAuthService
 const oktaConfig = Object.assign({
     // onAuthRequired is triggered when a route protected by OktaAuthGuard is
@@ -69,7 +70,8 @@ AppModule = __decorate([
             CheckoutComponent,
             LoginComponent,
             LoginStatusComponent,
-            MembersPageComponent
+            MembersPageComponent,
+            OrderHistoryComponent
         ],
         imports: [
             RouterModule.forRoot(routes),
