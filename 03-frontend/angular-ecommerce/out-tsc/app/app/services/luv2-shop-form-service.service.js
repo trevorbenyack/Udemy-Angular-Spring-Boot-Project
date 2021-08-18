@@ -2,11 +2,12 @@ import { __decorate } from "tslib";
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 let Luv2ShopFormServiceService = class Luv2ShopFormServiceService {
     constructor(httpClient) {
         this.httpClient = httpClient;
-        this.countriesUrl = "http://localhost:8080/api/countries";
-        this.statesUrl = "http://localhost:8080/api/states";
+        this.countriesUrl = environment.luv2shopApiUrl + "/countries";
+        this.statesUrl = environment.luv2shopApiUrl + "/states";
     }
     getCountries() {
         return this.httpClient.get(this.countriesUrl).pipe(map(response => response._embedded.countries));

@@ -1,13 +1,14 @@
 import { __decorate } from "tslib";
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 // This is using dependency injection to inject the ProductService for use throughout the app
 let ProductService = class ProductService {
     // Injects HttpClient
     constructor(httpClient) {
         this.httpClient = httpClient;
-        this.baseUrl = 'http://localhost:8080/api/products';
-        this.categoryUrl = 'http://localhost:8080/api/product-categories';
+        this.baseUrl = environment.luv2shopApiUrl + "/products";
+        this.categoryUrl = environment.luv2shopApiUrl + "/product-categories";
     }
     getProduct(theProductId) {
         // need to build URL based on product id

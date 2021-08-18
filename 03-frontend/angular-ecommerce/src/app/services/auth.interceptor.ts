@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import {from, Observable} from 'rxjs';
 import {OktaAuthService} from '@okta/okta-angular';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -21,8 +22,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
 
+    const ordersEndpoint = environment.luv2shopApiUrl + '/orders'
     // Only add an access token for secured endpoints
-    const securedEndpoints = ['http://localhost:8080/api/orders'];
+    const securedEndpoints = [ordersEndpoint];
 
     if (securedEndpoints.some(url => request.urlWithParams.includes(url))) {
 

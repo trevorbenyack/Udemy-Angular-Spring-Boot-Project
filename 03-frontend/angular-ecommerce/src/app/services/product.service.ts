@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Product} from '../common/product';
 import {map} from 'rxjs/operators';
 import {ProductCategory} from '../common/product-category';
+import {environment} from '../../environments/environment';
 
 // This is using dependency injection to inject the ProductService for use throughout the app
 @Injectable({
@@ -11,8 +12,8 @@ import {ProductCategory} from '../common/product-category';
 })
 export class ProductService {
 
-  private baseUrl = 'http://localhost:8080/api/products';
-  private categoryUrl = 'http://localhost:8080/api/product-categories';
+  private baseUrl = environment.luv2shopApiUrl + "/products";
+  private categoryUrl = environment.luv2shopApiUrl + "/product-categories";
 
   // Injects HttpClient
   constructor(private httpClient: HttpClient) { }

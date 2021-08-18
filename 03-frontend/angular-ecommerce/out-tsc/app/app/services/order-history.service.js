@@ -1,9 +1,10 @@
 import { __decorate } from "tslib";
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 let OrderHistoryService = class OrderHistoryService {
     constructor(httpClient) {
         this.httpClient = httpClient;
-        this.orderUrl = 'http://localhost:8080/api/orders';
+        this.orderUrl = environment.luv2shopApiUrl + "/orders";
     }
     getOrderHistory(theEmail) {
         // need to build URL based on the customer email

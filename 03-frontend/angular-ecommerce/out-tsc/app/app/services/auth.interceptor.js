@@ -1,6 +1,7 @@
 import { __awaiter, __decorate } from "tslib";
 import { Injectable } from '@angular/core';
 import { from } from 'rxjs';
+import { environment } from '../../environments/environment';
 let AuthInterceptor = class AuthInterceptor {
     constructor(oktaAuth) {
         this.oktaAuth = oktaAuth;
@@ -11,8 +12,9 @@ let AuthInterceptor = class AuthInterceptor {
     }
     handleAccess(request, next) {
         return __awaiter(this, void 0, void 0, function* () {
+            const ordersEndpoint = environment.luv2shopApiUrl + '/orders';
             // Only add an access token for secured endpoints
-            const securedEndpoints = ['http://localhost:8080/api/orders'];
+            const securedEndpoints = [ordersEndpoint];
             if (securedEndpoints.some(url => request.urlWithParams.includes(url))) {
                 // get access token
                 const accessToken = yield this.oktaAuth.getAccessToken();
