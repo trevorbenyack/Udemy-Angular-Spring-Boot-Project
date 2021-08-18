@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './product-list/product-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {Routes, RouterModule, Router} from '@angular/router';
 
 // this was added when we added the HttpClientModule below
@@ -18,6 +18,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 import {
   OKTA_CONFIG, OktaAuthGuard,
@@ -95,7 +96,10 @@ const routes: Routes = [
   ],
   providers: [
     ProductService, // ProductService allows us to inject this into other parts of our application
-    {provide: OKTA_CONFIG, useValue: oktaConfig}
+    {provide: OKTA_CONFIG, useValue: oktaConfig},
+    // multi: true means that there can be zero to many interceptors
+    // it informs Angular that HTTP_INTERCEPTORS is a token for injection of an array of values
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

@@ -34,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
       // to make a copy first
       request = request.clone({
         setHeaders: {
-          Authorization: 'Bearer ' + accessToken,
+          Authorization: 'Bearer ' + accessToken
         }
       });
     }

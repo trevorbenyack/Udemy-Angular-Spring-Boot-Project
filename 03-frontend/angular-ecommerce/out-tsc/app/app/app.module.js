@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './product-list/product-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule, Router } from '@angular/router';
 // this was added when we added the HttpClientModule below
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
@@ -16,6 +16,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
+import { AuthInterceptor } from './services/auth.interceptor';
 import { OKTA_CONFIG, OktaAuthGuard, OktaAuthModule, OktaCallbackComponent } from '@okta/okta-angular';
 import myAppConfig from './config/my-app-config';
 import { ProductService } from './services/product.service';
@@ -86,7 +87,10 @@ AppModule = __decorate([
         ],
         providers: [
             ProductService,
-            { provide: OKTA_CONFIG, useValue: oktaConfig }
+            { provide: OKTA_CONFIG, useValue: oktaConfig },
+            // multi: true means that there can be zero to many interceptors
+            // it informs Angular that HTTP_INTERCEPTORS is a token for injection of an array of values
+            { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
         ],
         bootstrap: [AppComponent]
     })
