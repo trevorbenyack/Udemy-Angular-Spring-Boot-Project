@@ -10,6 +10,8 @@ export class CheckoutService {
 
   private purchaseUrl = 'http://localhost:8080/api/checkout/purchase';
 
+  storage: Storage = localStorage;
+
   constructor(private httpClient: HttpClient) { }
 
   placeOrder(purchase: Purchase): Observable<any> {

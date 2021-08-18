@@ -215,7 +215,7 @@ section{
 }
 
 .au-input-xl{
-  min-width:935px
+  min-width:500px
 }
 
 input.au-input.au-input-xl{
@@ -667,9 +667,9 @@ label.date{
   -o-transform:rotate(45deg);
   transform:rotate(45deg)
 }
-option:first{
-  color:#ccc
-}
+/*option:first{*/
+/*  color:#ccc*/
+/*}*/
 select{
   color:#828482
 }
@@ -1034,7 +1034,6 @@ footer ul li{
     padding-left:12px
   }
   .header-mobile .header-mobile-bar{
-    padding:6px 0;
     background:#fff;
     border:0;
     padding:8px 0

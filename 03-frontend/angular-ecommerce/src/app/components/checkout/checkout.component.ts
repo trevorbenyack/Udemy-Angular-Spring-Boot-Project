@@ -33,6 +33,10 @@ export class CheckoutComponent implements OnInit {
   shippingAddressStates: State[] = [];
   billingAddressStates: State[] = [];
 
+  sessionStorage: Storage = sessionStorage;
+  localStorage: Storage = localStorage;
+
+
   constructor(private formBuilder: FormBuilder,
               private luv2ShopFormService: Luv2ShopFormServiceService,
               private cartService: CartService,
@@ -41,6 +45,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // read the user's email address from sessionStorage
+    const theEmail = JSON.parse(this.sessionStorage.getItem('userEmail'));
 
     this.reviewCartDetails();
 
@@ -51,7 +58,7 @@ export class CheckoutComponent implements OnInit {
             Validators.minLength(2),
             Luv2ShopValidators.notOnlyWhitespace]), // .notOnlyWhitespace is our custom validator *method* name
         lastName: new FormControl('', [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
-        email: new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
+        email: new FormControl(theEmail, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({
         street: new FormControl('', [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
@@ -301,6 +308,7 @@ export class CheckoutComponent implements OnInit {
   private resetCart() {
     // reset cart data
     this.cartService.cartItems = [];
+    this.localStorage.setItem('cartItems', JSON.stringify([]));
     this.cartService.totalPrice.next(0);
     this.cartService.totalQuantity.next(0);
 

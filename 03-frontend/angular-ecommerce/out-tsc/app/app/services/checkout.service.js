@@ -4,6 +4,7 @@ let CheckoutService = class CheckoutService {
     constructor(httpClient) {
         this.httpClient = httpClient;
         this.purchaseUrl = 'http://localhost:8080/api/checkout/purchase';
+        this.storage = localStorage;
     }
     placeOrder(purchase) {
         return this.httpClient.post(this.purchaseUrl, purchase);
